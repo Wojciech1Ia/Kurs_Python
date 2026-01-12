@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Moduł 4 - Asynchroniczność</title>
+<meta name="description" content="Szczegóły modułu 4 kursu Python." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#071022; --muted:#9aa4b2; --accent:#7c3aed; --accent-2:#06b6d4; --radius:12px; --max-width:1100px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+    background:linear-gradient(180deg,#071022 0%, #071a2a 60%);
+    color:#e6eef6;padding:28px;display:flex;justify-content:center;
+  }
+  .container{width:100%;max-width:var(--max-width)}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+  .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;box-shadow:0 8px 26px rgba(124,58,237,0.16)}
+  main{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--radius);padding:28px;box-shadow:0 10px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+  h1{margin:0 0 12px 0;font-size:24px}
+  p.lead{color:var(--muted);margin:0 0 18px 0}
+  .content{margin-top:20px;line-height:1.6}
+  .images{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+  .images img{width:100%;border-radius:12px;object-fit:cover;box-shadow:0 6px 18px rgba(2,6,23,0.45)}
+  .back{margin-top:24px;display:inline-block;color:var(--muted);text-decoration:none;border:1px solid rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px}
+  @media (max-width:640px){ body{padding:18px} }
+  #matrix-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:#071022;pointer-events:none}
+</style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header>
+      <div class="logo" aria-hidden="true">D</div>
+      <div>
+        <div style="font-weight:700">Kurs Python</div>
+        <div class="muted" style="font-size:13px">Moduł 4 - Asynchroniczność</div>
+      </div>
+      <nav style="margin-left:auto">
+        <a href="kurs.html" class="back" aria-label="Powrót do listy modułów">Powrót</a>
+      </nav>
+    </header>
+
+    <main aria-labelledby="modulTitle">
+      <h1 id="modulTitle">Moduł 4 - Asynchroniczność</h1>
+      <p class="lead">Krótki opis modułu - co obejmuje, czego się nauczysz.</p>
+
+      <div class="content">
+        <p>Tu możesz umieścić szczegółowy opis, przykłady kodu, zadania praktyczne oraz wskazówki dla uczestników kursu.</p>
+        <p>Dodaj także własne notatki, ciekawostki i materiały pomocnicze.</p>
+      </div>
+
+      <section class="images" aria-label="Screenshoty i ilustracje">
+        <img src="screenshot1.jpg" alt="Przykład kodu w Pythonie">
+        <img src="screenshot2.jpg" alt="Wynik działania programu">
+      </section>
+    </main>
+  </div>
+
+  <canvas id="matrix-bg"></canvas>
+  <script>
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const letters = '01<>[]{};:+=-*/Python';
+    const fontSize = 14;
+    let columns = canvas.width / fontSize;
+    const drops = Array.from({length: columns}, () => 1);
+
+    function draw() {
+      ctx.fillStyle = 'rgba(7,16,34,0.25)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#7c3aed';
+      ctx.font = fontSize + 'px monospace';
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    setInterval(draw, 80);
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = canvas.width / fontSize;
+      drops.length = 0;
+      for (let i = 0; i < columns; i++) drops[i] = 1;
+    });
+  </script>
+</body>
+</html>
