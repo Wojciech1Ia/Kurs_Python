@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title> Kurs Python</title>
+<meta name="description" content="Dane kontaktowe prowadzących kurs Python." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#071022; --muted:#9aa4b2; --accent:#7c3aed; --accent-2:#06b6d4; --card-radius:12px; --max-width:1100px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+    background:linear-gradient(180deg,#071022 0%, #071a2a 60%);
+    color:#e6eef6;padding:28px;display:flex;justify-content:center;
+  }
+  .container{width:100%;max-width:var(--max-width)}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800}
+  main{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:var(--card-radius);padding:24px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 12px 30px rgba(2,6,23,0.6)}
+  h1{margin:0 0 8px 0;font-size:22px}
+  p.lead{color:var(--muted);margin:0 0 18px 0}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 18px rgba(2,6,23,0.45)}
+  .card h3{margin:0 0 8px 0;font-size:16px}
+  .muted{color:var(--muted);font-size:14px}
+  .contact-list{margin-top:10px;padding:0;list-style:none}
+  .contact-list li{margin:8px 0}
+  a.contact-link{color:#eaf2ff;text-decoration:none;font-weight:600}
+  a.contact-link:hover{text-decoration:underline}
+  .back{margin-top:18px;display:inline-block;color:var(--muted);text-decoration:none;border:1px solid rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px}
+  @media (max-width:980px){ .grid{grid-template-columns:repeat(2,1fr)} }
+  @media (max-width:640px){ .grid{grid-template-columns:1fr} body{padding:18px} }
+
+#matrix-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1; /* tło za treścią */
+  background: #071022;
+  pointer-events: none; /* żeby nie blokował kliknięć */
+}
+
+</style>
+</head>
+<body>
+  <div class="container" role="main">
+    <header>
+     <div class="logo" aria-hidden="true">2.</div>
+      <div>
+        <div style="font-weight:700">Kurs Python</div>
+        <div class="muted" style="font-size:13px">Kontakt</div>
+      </div>
+      <nav style="margin-left:auto">
+        <a href="index.html" class="back" aria-label="Powrót do strony głównej">Powrót</a>
+      </nav>
+    </header>
+
+    <main aria-labelledby="kontaktTitle">
+      <h1 id="kontaktTitle">Kontakt</h1>
+      <p class="lead">Poniżej znajdziesz dane kontaktowe trzech osób odpowiedzialnych za kurs.</p>
+
+      <section class="grid" aria-label="Dane kontaktowe prowadzących">
+        <article class="card" tabindex="0" aria-labelledby="p1">
+          <h3 id="p1">Piotr Zdziech</h3>
+          <div class="muted">Twórca materiału dydaktycznego</div>
+          <ul class="contact-list" aria-label="Kontakt do Piotra Zdziecha">
+            <li>Email: <a class="contact-link" href="mailto:pzdziech24@uczen.tl.krakow.pl">pzdziech24@uczen.tl.krakow.pl</a></li>
+           
+            
+          </ul>
+        </article>
+
+        <article class="card" tabindex="0" aria-labelledby="p2">
+          <h3 id="p2">Wojciech Mars</h3>
+          <div class="muted">Twórca strony internetowej </div>
+          <ul class="contact-list" aria-label="Kontakt do Wojtka Marsa">
+            <li>Email: <a class="contact-link" href="mailto:wmars39@uczen.tl.krakow.pl">wmars39@uczen.tl.krakow.pl</a></li>
+           
+          </ul>
+        </article>
+
+        <article class="card" tabindex="0" aria-labelledby="p3">
+          <h3 id="p3">Antoni Dominiarczyk</h3>
+          <div class="muted">Wsparcie organizacyjne kursu</div>
+          <ul class="contact-list" aria-label="Kontakt do Antoniego Dominiarczyka">
+            <li>Email: <a class="contact-link" href="mailto:adominiarczyk65@uczen.tl.krakow.pl">adominiarczyk65@uczen.tl.krakow.pl</a></li>
+           
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+<canvas id="matrix-bg"></canvas>
+<script>
+  const canvas = document.getElementById('matrix-bg');
+  const ctx = canvas.getContext('2d');
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const letters = '01<>[]{};:+=-*/Python';
+  const fontSize = 14;
+  const columns = canvas.width / fontSize;
+  const drops = [];
+
+  for (let i = 0; i < columns; i++) {
+    drops[i] = 1;
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(7,16,34,0.25)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#7c3aed';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const text = letters[Math.floor(Math.random() * letters.length)];
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 80);
+
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+
+</body>
+</html>
